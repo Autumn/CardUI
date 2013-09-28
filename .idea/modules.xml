@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DemoUIFramework/DemoUIFramework.iml" filepath="$PROJECT_DIR$/DemoUIFramework/DemoUIFramework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DemoUIFrameworkProject.iml" filepath="$PROJECT_DIR$/DemoUIFrameworkProject.iml" />
+    </modules>
+  </component>
+</project>
+
