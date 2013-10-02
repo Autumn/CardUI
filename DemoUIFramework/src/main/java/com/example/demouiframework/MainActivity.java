@@ -12,13 +12,19 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_background);
         LinearLayout ll = (LinearLayout) findViewById(R.id.mainLayout);
+
         CardBackground background = new CardBackground(ll);
+
         CardBuilder largeHeadingBuilder = new CardBuilder(this, ll);
-        largeHeadingBuilder.addLargeImageHeading("hello", "");
-        largeHeadingBuilder.addBasicLabel("one", "two");
+        largeHeadingBuilder.addBasicLabel("hello", "wagyu");
+
         CardBuilder dropdownBuilder = new CardBuilder(this, ll);
         dropdownBuilder.addBasicLabel("test", "Text");
         largeHeadingBuilder.addSubheadingDropdown("dropdown", dropdownBuilder.getContainer());
+
+        CardBuilder subDropdownBuilder = new CardBuilder(this, ll);
+        subDropdownBuilder.addBasicLabel("uguu", "wafu");
+        dropdownBuilder.addSubsubheadingDropdown("gao", subDropdownBuilder.getContainer());
 
         background.addContainer(largeHeadingBuilder.getContainer());
         background.finalise();

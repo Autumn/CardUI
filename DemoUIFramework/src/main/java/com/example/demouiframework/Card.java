@@ -1,5 +1,6 @@
 package com.example.demouiframework;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -33,6 +34,13 @@ class CardBuilder {
         this.rootView = rootView;
 
         containerView = new CardContainer(cxt, rootView);
+
+        LayoutTransition anim = new LayoutTransition();
+        anim.enableTransitionType(LayoutTransition.CHANGE_APPEARING);
+        anim.enableTransitionType(LayoutTransition.CHANGE_DISAPPEARING);
+        anim.setDuration(100);
+
+        containerView.containerView.setLayoutTransition(anim);
     }
 
     void addLargeImageHeading(String heading, String url) {
@@ -101,6 +109,12 @@ class CardElement  {
         element = container;
     }
 
+    void setAnimation() {
+        LayoutTransition anim = new LayoutTransition();
+        anim.enableTransitionType(LayoutTransition.APPEARING);
+        element.setLayoutTransition(anim);
+    }
+
     void createSubheadingDropdown(String heading) {
         RelativeLayout container = (RelativeLayout) vi.inflate(R.layout.card_subheading_dropdown, null);
         TextView headingView = (TextView) container.findViewById(R.id.heading);
@@ -108,6 +122,9 @@ class CardElement  {
         setDropdownClickAction(dropdown);
         headingView.setText(heading);
         element = container;
+
+        //setAnimation();
+
     }
 
     void createSubsubheadingDropdown(String heading) {
@@ -117,6 +134,8 @@ class CardElement  {
         setDropdownClickAction(dropdown);
         headingView.setText(heading);
         element = container;
+        //setAnimation();
+
     }
 
     void createBasicLabel(String heading, String text) {
@@ -197,7 +216,6 @@ class CardElement  {
     }
 
     void expandDropdown() {
-
         ImageView dropdownImage = (ImageView) element.findViewById(R.id.dropdown);
         dropdownImage.setImageResource(R.drawable.ic_find_previous_holo_light);
 
@@ -210,7 +228,6 @@ class CardElement  {
         ImageView dropdownImage = (ImageView) element.findViewById(R.id.dropdown);
         dropdownImage.setImageResource(R.drawable.ic_find_next_holo_light);
 
-        int index = parent.indexOfChild(element);
         dropdownContent.containerView.removeAllViews();
         parent.removeView(dropdownContent.containerView);
     }
