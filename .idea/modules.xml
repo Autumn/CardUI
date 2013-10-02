@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CardUI.iml" filepath="$PROJECT_DIR$/CardUI.iml" />
       <module fileurl="file://$PROJECT_DIR$/DemoUIFramework/DemoUIFramework.iml" filepath="$PROJECT_DIR$/DemoUIFramework/DemoUIFramework.iml" />
       <module fileurl="file://$PROJECT_DIR$/DemoUIFrameworkProject.iml" filepath="$PROJECT_DIR$/DemoUIFrameworkProject.iml" />
     </modules>

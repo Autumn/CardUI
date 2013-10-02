@@ -15,7 +15,70 @@ import java.util.ArrayList;
 /**
  * Created by aki on 28/09/13.
  */
-abstract class CardElement  {
+
+
+// builds cards up with simple API
+// provides access to internal container to add to a background
+
+class CardBuilder {
+
+    LinearLayout rootView;
+    Context cxt;
+    CardContainer containerView;
+
+    final int LARGE_IMAGE_HEADING = 1;
+
+    public CardBuilder(Context cxt, LinearLayout rootView) {
+        this.cxt = cxt;
+        this.rootView = rootView;
+
+        containerView = new CardContainer(cxt, rootView);
+    }
+
+    void addLargeImageHeading(String heading, String url) {
+        CardElement element = new CardElement(cxt, rootView);
+        element.createLargeImageHeading(heading, url);
+        containerView.addElement(element);
+    }
+
+    void addBasicLabel(String heading, String text) {
+        CardElement element = new CardElement(cxt, containerView.containerView);
+        element.createBasicLabel(heading, text);
+        containerView.addElement(element);
+    }
+
+    void addLabelLink(String heading, String text) {
+        CardElement element = new CardElement(cxt, containerView.containerView);
+        element.createLabelLink(heading, text);
+        containerView.addElement(element);
+    }
+
+    void addLabelImageLink(String heading, String text) {
+        CardElement element = new CardElement(cxt, containerView.containerView);
+        element.createLabelImageLink(heading, text);
+        containerView.addElement(element);
+    }
+
+    void addSubheadingDropdown(String heading, CardContainer dropdownContainer) {
+        CardElement element = new CardElement(cxt, containerView.containerView);
+        element.createSubheadingDropdown(heading);
+        element.setDropdownContent(dropdownContainer);
+        containerView.addElement(element);
+    }
+
+    void addSubsubheadingDropdown(String heading, CardContainer dropdownContainer) {
+        CardElement element = new CardElement(cxt, containerView.containerView);
+        element.createSubheadingDropdown(heading);
+        element.setDropdownContent(dropdownContainer);
+        containerView.addElement(element);
+    }
+
+    CardContainer getContainer() {
+        return containerView;
+    }
+}
+
+class CardElement  {
     int id;
     ViewGroup parent;
     ViewGroup element;
@@ -99,7 +162,7 @@ abstract class CardElement  {
             @Override
             public void onClick(View view) {
                 image.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                onImagePress();
+                //onImagePress();
             }
         });
         return image;
@@ -111,7 +174,7 @@ abstract class CardElement  {
             @Override
             public void onClick(View view) {
                 link.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                onLinkPress();
+                //onLinkPress();
             }
         });
         return link;
@@ -134,12 +197,19 @@ abstract class CardElement  {
     }
 
     void expandDropdown() {
+
+        ImageView dropdownImage = (ImageView) element.findViewById(R.id.dropdown);
+        dropdownImage.setImageResource(R.drawable.ic_find_previous_holo_light);
+
         int index = parent.indexOfChild(element);
         dropdownContent.finalise();
         parent.addView(dropdownContent.containerView, index + 1);
     }
 
     void revertDropdown() {
+        ImageView dropdownImage = (ImageView) element.findViewById(R.id.dropdown);
+        dropdownImage.setImageResource(R.drawable.ic_find_next_holo_light);
+
         int index = parent.indexOfChild(element);
         dropdownContent.containerView.removeAllViews();
         parent.removeView(dropdownContent.containerView);
@@ -157,9 +227,9 @@ abstract class CardElement  {
         }
         flipToggle();
     }
-
-    abstract void onLinkPress();
-    abstract void onImagePress();
+//
+//    abstract void onLinkPress();
+//    abstract void onImagePress();
 }
 
 class CardContainer {
