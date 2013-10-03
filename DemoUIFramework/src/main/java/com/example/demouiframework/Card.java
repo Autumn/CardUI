@@ -98,6 +98,7 @@ class CardElement  {
         vi = (LayoutInflater) cxt.getSystemService(cxt.LAYOUT_INFLATER_SERVICE);
         this.parent = parent;
         toggled = false;
+
     }
 
     void createLargeImageHeading(String heading, String url) {
@@ -109,12 +110,6 @@ class CardElement  {
         element = container;
     }
 
-    void setAnimation() {
-        LayoutTransition anim = new LayoutTransition();
-        anim.enableTransitionType(LayoutTransition.APPEARING);
-        element.setLayoutTransition(anim);
-    }
-
     void createSubheadingDropdown(String heading) {
         RelativeLayout container = (RelativeLayout) vi.inflate(R.layout.card_subheading_dropdown, null);
         TextView headingView = (TextView) container.findViewById(R.id.heading);
@@ -122,9 +117,6 @@ class CardElement  {
         setDropdownClickAction(dropdown);
         headingView.setText(heading);
         element = container;
-
-        //setAnimation();
-
     }
 
     void createSubsubheadingDropdown(String heading) {
@@ -134,8 +126,6 @@ class CardElement  {
         setDropdownClickAction(dropdown);
         headingView.setText(heading);
         element = container;
-        //setAnimation();
-
     }
 
     void createBasicLabel(String heading, String text) {
@@ -244,9 +234,16 @@ class CardElement  {
         }
         flipToggle();
     }
+
+    void onRemoveView() {
+
+    }
+
 //
 //    abstract void onLinkPress();
 //    abstract void onImagePress();
+
+
 }
 
 class CardContainer {

@@ -6,6 +6,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_below="@+id/horizontalRule"
+    android:background="#f1f1f1"
+    android:padding="15dp"
     android:id="@+id/linearLayout"
 >
 
