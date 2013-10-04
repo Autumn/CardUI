@@ -2,10 +2,12 @@ package com.example.demouiframework;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
+import android.content.Intent;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -81,6 +83,18 @@ class CardBuilder {
         containerView.addElement(element);
     }
 
+    void addLabelWebView(String content) {
+        CardElement element = new CardElement(cxt, containerView.containerView);
+        element.createLabelWebView(content);
+        containerView.addElement(element);
+    }
+
+    void addListLabelImageLink(String heading, Intent intent) {
+        CardElement element = new CardElement((cxt), containerView.containerView);
+        element.createListLabelImageLink(heading, intent);
+        containerView.addElement(element);
+    }
+
     CardContainer getContainer() {
         return containerView;
     }
@@ -93,8 +107,11 @@ class CardElement  {
     LayoutInflater vi;
     CardContainer dropdownContent;
     boolean toggled;
+    Context cxt;
+
 
     public CardElement(Context cxt, ViewGroup parent) {
+        this.cxt = cxt;
         vi = (LayoutInflater) cxt.getSystemService(cxt.LAYOUT_INFLATER_SERVICE);
         this.parent = parent;
         toggled = false;
@@ -137,6 +154,13 @@ class CardElement  {
         element = container;
     }
 
+    void createLabelWebView(String text) {
+        LinearLayout container = (LinearLayout) vi.inflate(R.layout.card_label_basic, null);
+        WebView textView = (WebView) container.findViewById(R.id.labelWebView);
+        textView.loadData(text, "text/html", null);
+        element = container;
+    }
+
     void createLabelLink(String heading, String text) {
         RelativeLayout container = (RelativeLayout) vi.inflate(R.layout.card_label_link, null);
         TextView headingView = (TextView) container.findViewById(R.id.heading);
@@ -165,6 +189,17 @@ class CardElement  {
         element = container;
     }
 
+    void createListLabelImageLink(String text, Intent intent) {
+        RelativeLayout container = (RelativeLayout) vi.inflate(R.layout.card_list_label_image_link, null);
+        TextView heading = (TextView) container.findViewById(R.id.heading);
+        ImageView link = (ImageView) container.findViewById(R.id.link);
+        heading.setText(text);
+        setLinkClickAction(link, intent);
+
+        element = container;
+    }
+
+
     ImageView setImageClickAction(final ImageView image) {
         image.setHapticFeedbackEnabled(true);
         image.setOnClickListener(new View.OnClickListener() {
@@ -188,6 +223,19 @@ class CardElement  {
         });
         return link;
     }
+
+    ImageView setLinkClickAction(final ImageView link, final Intent intent) {
+        link.setHapticFeedbackEnabled(true);
+        link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                link.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                cxt.startActivity(intent);
+            }
+        });
+        return link;
+    }
+
 
     ImageView setDropdownClickAction(final ImageView dropdown) {
         dropdown.setHapticFeedbackEnabled(true);
